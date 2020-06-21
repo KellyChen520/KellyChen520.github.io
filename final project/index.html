@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Final Project</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="final.css">
+</head>
+
+<body style="background-color:rgba(70, 160, 167, 0.527);">
+    <div>
+        <div class="title container">
+            <h1 style=" font-family: 'Microsoft JhengHei' ; color: black; font-weight: bolder;">等一下吃什麼？</h1>
+        </div>
+
+        <div class="container choice">
+            <div class="row d-flex">
+                <div class="col-md-4 selection">
+                    <p class="words">選擇想吃的餐廳類別：</p>
+                    <select name="type" id="type" class="sel">
+                        <option value="alltype">都可以</option>
+                        <option value="fastfood">速食</option>
+                        <option value="buffet">自助</option>
+                        <option value="zh">中華</option>
+                        <option value="eur">歐式</option>
+                        <option value="us">美式</option>
+                        <option value="hk">港式</option>
+                        <option value="jp">日式</option>
+                        <option value="tl">泰式</option>
+                        <option value="kr">韓式</option>
+                        <option value="dessert">甜點</option>
+                        <option value="ice">冰品</option>
+                        <option value="drinks">飲料</option>
+                        <option value="cafe">咖啡廳</option>
+                        <option value="other">其他</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 selection">
+                    <p class="words">選擇願意接受的價格：</p>
+                    <select name="price" id="price" class="sel">
+                        <option value="allprice">都可以</option>
+                        <option value="under150">NT$150以下</option>
+                        <option value="150_250">NT$150 ~ 250</option>
+                        <option value="250_500">NT$250 ~ 500</option>
+                        <option value="above500">NT$500以上</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 selection">
+                    <p class="words">選擇理想的地區：</p>
+                    <select name="area" id="area" class="sel">
+                        <option value="allarea">都可以</option>
+                        <option value="incampus">校內</option>
+                        <option value="xinsheng">新生南路側</option>
+                        <option value="xinhai">辛亥路側</option>
+                        <option value="keelung">基隆路側</option>
+                        <option value="roosevelt">羅斯福路側</option>
+                    </select>
+                </div>
+                <div class="decision container">
+                    <button id='search_id' class="bt bt1">印出所有選項</button>
+                    <button id='random_id' class="bt bt1">幫我決定</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container list d-flex">
+            <p> </p>
+            <div id='result_id' class="result"></div>
+            <!-- <span id='result_id' class="result"></span> -->
+            <span id='randomResult_id' class="result"></span>
+        </div>
+
+    </div>
+
+
+
+
+    <script src='final.js'></script>
+</body>
+
+</html>
