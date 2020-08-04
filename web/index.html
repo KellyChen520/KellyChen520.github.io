@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization</title>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="jquery.js"></script>
+    <script src="create.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="visual.css">
+</head>
+
+<body>
+    <div class="container title">
+        <p style="font-family: 'Microsoft JhengHei'; color: black; font-weight: bolder; font-size: 150%;">產品趨勢圖</p>
+    </div>
+
+    <div class="container choices">
+        <span>欲顯示趨勢圖的商品個數 : </span><input type="text" id='product_cnt'><span> </span><button id='input_id' type="button"
+            class="bt bt1">輸入</button>
+        <!-- <span>商品代碼 : </span><input type="text" id='product_id'><button id='search_id'>搜尋</button> -->
+        <br />
+        <div id="add"></div>
+    </div>
+    <div id='result_id'></div>
+    <div class="container result">
+        <div id="myDiv" class="container pic flex">
+            <!-- Plotly chart will be drawn inside this DIV -->
+            <!-- style="width: 550px; height: 460px;" -->
+        </div>
+    </div>
+
+</body>
+
+</html>
