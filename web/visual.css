@@ -55,6 +55,7 @@
     position: relative;
     width: 60%;
     margin-left: 20%;
+    height: 450px;
 }
 
 .pic {
@@ -65,4 +66,44 @@
     /* margin-left: 20%; */
     display: inline-block;
     margin: 0 auto;
+}
+
+.tb {
+    position: relative;
+    /* top: 400px; */
+    width: 80%;
+    margin-left: 12%;
+    display: block;
+    font-family: 'Microsoft JhengHei';
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+}
+
+th {
+    background-color: #2f96d1;
+    color: white;
+}
+
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.table_title {
+    text-align: center;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.footer {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }
