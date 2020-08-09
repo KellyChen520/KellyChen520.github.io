@@ -116,7 +116,7 @@ function create_control(cnt) {
                 },
                 yaxis: {
                     title: {
-                        text: 'Sales Amount'
+                        text: 'Quantity'
                     }
                 }
             });
