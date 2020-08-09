@@ -5,8 +5,17 @@ $(document).ready(function () {
 function load() {
     $("#product_cnt").focus();
 
+    var input1 = document.getElementById("product_cnt");
+    input1.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("input_id").click();
+        }
+    });
+
     $("#input_id").click(function () {
         $("#add").empty();
+        $("#myTable").empty();
         var cnt = $("#product_cnt").val();
 
         if (cnt > 0) {
@@ -26,13 +35,32 @@ function create_control(cnt) {
     tbl += "<button id='search_id' class='bt bt1'>搜尋</button>"
     $("#add").append(tbl);
 
+    var input2 = document.getElementById('product_id' + cnt);
+    input2.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("search_id").click();
+            $("#myTable").empty();
+        }
+    });
+
+    $("#search_id").click(function () {
+        $("#myTable").empty();
+    });
+
     document.getElementById('search_id').onclick = function findProduct() {
-        var count = document.getElementById('product_cnt').value
+        var count = document.getElementById('product_cnt').value;
         var product = [];
+        var pro_name = "";
         for (var i = 1; i <= count; i++) {
             item_id = 'product_id' + i;
-            var tmp = document.getElementById(item_id).value
+            var tmp = document.getElementById(item_id).value;
             product.push(tmp);
+            if (i == 1) {
+                pro_name += tmp;
+            } else {
+                pro_name += ", " + tmp;
+            }
         }
         // var result_id = document.getElementById('result_id')
         // alert(product);
@@ -64,7 +92,6 @@ function create_control(cnt) {
                     }
                 }
             }
-
             makePlotly(combined);
         }
 
@@ -81,9 +108,46 @@ function create_control(cnt) {
             }
             // alert(all_data);
             Plotly.newPlot('myDiv', all_data, {
-                title: "Trend of " + product
+                title: "Monthly Sales of " + pro_name,
+                xaxis: {
+                    title: {
+                        text: 'Month'
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Sales Amount'
+                    }
+                }
             });
+
+            create_table(combined);
         };
         makeplot();
+
+        function create_table(combined) {
+            var t = "";
+            t = "<table>" + "<tr>" + "<th> 商品代碼 </th>";
+            for (var i = 0; i < combined[0].length; i++) {
+                t += "<th>" + combined[0][i] + "</th>"
+            }
+            t += "<th> Total Sales </th>"
+            t += "</tr>";
+
+            for (var i = 0; i < count; i++) {
+                var total = 0;
+                t += "<tr>" + "<td>" + product[i] + "</td>";
+                for (var j = 0; j < combined[0].length; j++) {
+                    t += "<td>" + combined[i + 1][j] + "</td>";
+                    total += parseInt(combined[i + 1][j]);
+                }
+                t += "<td>" + total + "</td>";
+                t += "</tr>";
+            }
+            t += "</table>";
+            s = "<p class='table_title'>商品每月銷售量與銷售總量</p>"
+            $("#myTable").append(s);
+            $("#myTable").append(t);
+        }
     }
 }
