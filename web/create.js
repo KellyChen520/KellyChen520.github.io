@@ -67,7 +67,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/data_sorted.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sortedmerged_data.csv",
                 function (data) {
                     processData(data);
                 });
