@@ -3,25 +3,112 @@ $(document).ready(function () {
 });
 
 function load() {
-    $("#product_cnt").focus();
+    // $("#product_cnt").focus();
 
-    var input1 = document.getElementById("product_cnt");
-    input1.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-            event.preventDefault();
-            document.getElementById("input_id").click();
-        }
-    });
+    // var input1 = document.getElementById("product_cnt");
+    // input1.addEventListener("keyup", function (event) {
+    //     if (event.keyCode === 13) {
+    //         event.preventDefault();
+    //         document.getElementById("input_id").click();
+    //     }
+    // });
 
     $("#input_id").click(function () {
         $("#add").empty();
+        $("#ask").empty();
+        $("#myDiv").empty();
         $("#myTable").empty();
-        var cnt = $("#product_cnt").val();
+        var form = document.getElementById("form_name");
+        for (var i = 0; i < 2; i++) {
+            if (form.classify[i].checked) {
+                var c = form.classify[i].value;
+                // alert(c);
+            }
+        }
 
-        if (cnt > 0) {
+        create_choices(c);
+    });
+}
+
+function create_choices(c) {
+    if (c == "one") {
+        var ask_cnt = "<span>欲顯示趨勢圖的商品個數 : </span><input type='text' id='product_cnt'><span> </span> <button id='input_cnt' type='button' class='bt bt1'>輸入</button>";
+        $("#ask").append(ask_cnt);
+        document.getElementById('input_cnt').onclick = function findProduct() {
+            $("#add").empty();
+            var cnt = document.getElementById('product_cnt').value;
+            // alert(cnt);
             create_control(cnt);
         }
-    });
+    } else {
+        function get_brand() {
+            Plotly.d3.csv(
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2Brand.csv",
+                function (data) {
+                    // console.log(data);
+                    var all_brand = [];
+                    var ask_brand = "<p>請選擇品牌 (商品編號頭兩碼)：</p>   <select name='brand' id='b' class='sel'>";
+                    for (var i = 0; i < 42; i++) {
+                        row = data[i];
+                        all_brand.push(row['NotRepeat']);
+                        ask_brand += "<option value=" + all_brand[i] + ">" + all_brand[i] + "</option>";
+                    }
+
+                    ask_brand += "</select> <button id='input_brand' type='button' class='bt bt1'>搜尋</button>";
+                    // alert(ask_brand);
+                    $("#ask").append(ask_brand);
+                    document.getElementById('input_brand').onclick = function findBrand() {
+                        $("#myTable").empty();
+                        var choosen_brand = $('#b').val();
+                        // alert(choosen_brand);
+                        var brand_item = [];
+                        for (var i = 0; i < data.length; i++) {
+                            row = data[i];
+                            if (row['Brand'] == choosen_brand) {
+                                brand_item.push(row['SKU_list']);
+                            } else {
+                                if (brand_item.length != 0) {
+                                    break;
+                                }
+                            }
+                        }
+                        // alert(brand_item);
+                        var brand_cnt = brand_item.length;
+                        // alert(brand_cnt);
+                        brand_list(brand_item, brand_cnt, choosen_brand);
+                    }
+                });
+        };
+        get_brand();
+
+    }
+}
+
+function brand_list(brand_item, brand_cnt, choosen_brand) {
+    Plotly.d3.csv(
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sorted_merged_branded_no0720.csv",
+        function (allRows) {
+            var combined = new Array(brand_cnt + 1);
+            for (var i = 0; i < brand_cnt + 1; i++) {
+                combined[i] = new Array(allRows.length).fill(0);
+            }
+            // console.log(combined)
+            for (var i = 0; i < allRows.length; i++) {
+                row = allRows[i];
+                for (var j = 0; j < brand_cnt + 1; j++) {
+                    if (j == 0) {
+                        combined[j][i] = row['HDATE'];
+                    } else {
+                        // alert(product[j - 1]);
+                        combined[j][i] = row[brand_item[j - 1]];
+                    }
+                }
+            }
+            var brand_name = "brand " + choosen_brand;
+            makePlotly(combined, brand_cnt, brand_item, brand_name);
+        });
+    // makePlotly(combined);
+    // alert(combined);
 }
 
 function create_control(cnt) {
@@ -67,7 +154,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sortedmerged_no0720.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sorted_merged_branded_no0720.csv",
                 function (data) {
                     processData(data);
                 });
@@ -92,62 +179,65 @@ function create_control(cnt) {
                     }
                 }
             }
-            makePlotly(combined);
+            makePlotly(combined, count, product, pro_name);
         }
-
-        function makePlotly(combined) {
-            // var plotDiv = document.getElementById("plot");
-            var all_data = [];
-            for (var i = 1; i <= count; i++) {
-                var temp = {
-                    x: combined[0],
-                    y: combined[i],
-                    name: product[i - 1]
-                };
-                all_data.push(temp);
-            }
-            // alert(all_data);
-            Plotly.newPlot('myDiv', all_data, {
-                title: "Monthly Sales of " + pro_name,
-                xaxis: {
-                    title: {
-                        text: 'Month'
-                    }
-                },
-                yaxis: {
-                    title: {
-                        text: 'Quantity'
-                    }
-                }
-            });
-
-            create_table(combined);
-        };
         makeplot();
-
-        function create_table(combined) {
-            var t = "";
-            t = "<table>" + "<tr>" + "<th> 商品代碼 </th>";
-            for (var i = 0; i < combined[0].length; i++) {
-                t += "<th>" + combined[0][i] + "</th>"
-            }
-            t += "<th> Total Sales </th>"
-            t += "</tr>";
-
-            for (var i = 0; i < count; i++) {
-                var total = 0;
-                t += "<tr>" + "<td>" + product[i] + "</td>";
-                for (var j = 0; j < combined[0].length; j++) {
-                    t += "<td>" + combined[i + 1][j] + "</td>";
-                    total += parseInt(combined[i + 1][j]);
-                }
-                t += "<td>" + total + "</td>";
-                t += "</tr>";
-            }
-            t += "</table>";
-            s = "<p class='table_title'>商品每月銷售量與銷售總量</p>"
-            $("#myTable").append(s);
-            $("#myTable").append(t);
-        }
     }
 }
+
+function makePlotly(combined, count, product, pro_name) {
+    // var plotDiv = document.getElementById("plot");
+    var all_data = [];
+    for (var i = 1; i <= count; i++) {
+        var temp = {
+            x: combined[0],
+            y: combined[i],
+            name: product[i - 1]
+        };
+        all_data.push(temp);
+    }
+    // alert(all_data);
+    Plotly.newPlot('myDiv', all_data, {
+        title: "Monthly Sales of " + pro_name,
+        xaxis: {
+            title: {
+                text: 'Month'
+            }
+        },
+        yaxis: {
+            title: {
+                text: 'Quantity'
+            }
+        }
+    });
+
+    create_table(combined, count, product);
+};
+
+function create_table(combined, count, product) {
+    var t = "";
+    t = "<table>" + "<tr>" + "<th> 商品代碼 </th>";
+    for (var i = 0; i < combined[0].length; i++) {
+        t += "<th>" + combined[0][i] + "</th>"
+    }
+    t += "<th> Total Sales </th>"
+    t += "</tr>";
+
+    for (var i = 0; i < count; i++) {
+        var total = 0;
+        t += "<tr>" + "<td>" + product[i] + "</td>";
+        for (var j = 0; j < combined[0].length; j++) {
+            t += "<td>" + combined[i + 1][j] + "</td>";
+            if (Number.isNaN(parseInt(combined[i + 1][j])) == false) {
+                // console.log(parseInt(combined[i + 1][j]))
+                total += parseInt(combined[i + 1][j]);
+            }
+        }
+        t += "<td>" + total + "</td>";
+        t += "</tr>";
+    }
+    t += "</table>";
+    s = "<p class='table_title'>商品每月銷售量與銷售總量</p>"
+    $("#myTable").append(s);
+    $("#myTable").append(t);
+};
