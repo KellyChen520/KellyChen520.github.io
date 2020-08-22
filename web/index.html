@@ -23,9 +23,14 @@
     </div>
 
     <div class="container choices">
-        <span>欲顯示趨勢圖的商品個數 : </span><input type="text" id='product_cnt'><span> </span><button id='input_id' type="button"
-            class="bt bt1">輸入</button>
-        <!-- <span>商品代碼 : </span><input type="text" id='product_id'><button id='search_id'>搜尋</button> -->
+        <form name="form_name" id="form_name">
+            <span>以 <input type="radio" id="one" name="classify" value="one">
+                <label for="one">商品</label>
+                <input type="radio" id="brand" name="classify" value="brand">
+                <label for="brand">品牌</label> 分類</span> <button id='input_id' type="button" class="bt bt1">輸入</button>
+        </form>
+        <br />
+        <div id="ask"></div>
         <br />
         <div id="add"></div>
     </div>
