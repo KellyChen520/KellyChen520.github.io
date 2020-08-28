@@ -48,7 +48,7 @@ function create_choices(c) {
                     // console.log(data);
                     var all_brand = [];
                     var ask_brand = "<p>請選擇品牌 (商品編號頭兩碼)：</p>   <select name='brand' id='b' class='sel'>";
-                    for (var i = 0; i < 42; i++) {
+                    for (var i = 0; i < 43; i++) {
                         row = data[i];
                         all_brand.push(row['NotRepeat']);
                         ask_brand += "<option value=" + all_brand[i] + ">" + all_brand[i] + "</option>";
@@ -86,13 +86,14 @@ function create_choices(c) {
 
 function brand_list(brand_item, brand_cnt, choosen_brand) {
     Plotly.d3.csv(
-        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sorted_merged_branded_no0720.csv",
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/cancelled_no0720.csv",
         function (allRows) {
-            var combined = new Array(brand_cnt + 1);
-            for (var i = 0; i < brand_cnt + 1; i++) {
+            var combined = new Array(brand_cnt + 2);
+            for (var i = 0; i < brand_cnt + 2; i++) {
                 combined[i] = new Array(allRows.length).fill(0);
             }
             // console.log(combined)
+            // alert(choosen_brand)
             for (var i = 0; i < allRows.length; i++) {
                 row = allRows[i];
                 for (var j = 0; j < brand_cnt + 1; j++) {
@@ -105,7 +106,19 @@ function brand_list(brand_item, brand_cnt, choosen_brand) {
                 }
             }
             var brand_name = "brand " + choosen_brand;
-            makePlotly(combined, brand_cnt, brand_item, brand_name);
+
+            Plotly.d3.csv(
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand_no0720.csv",
+                function (eachBrand) {
+                    for (var i = 0; i < eachBrand.length; i++) {
+                        row = eachBrand[i];
+                        combined[brand_cnt + 1][i] = row[choosen_brand];
+
+                    }
+                    makePlotly(combined, brand_cnt + 1, brand_item, brand_name);
+                })
+
+
         });
     // makePlotly(combined);
     // alert(combined);
@@ -154,7 +167,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sorted_merged_branded_no0720.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/cancelled_no0720.csv",
                 function (data) {
                     processData(data);
                 });
@@ -187,16 +200,26 @@ function create_control(cnt) {
 
 function makePlotly(combined, count, product, pro_name) {
     // var plotDiv = document.getElementById("plot");
+    // alert(count)
     var all_data = [];
     for (var i = 1; i <= count; i++) {
-        var temp = {
-            x: combined[0],
-            y: combined[i],
-            name: product[i - 1]
-        };
+        if (i != count) {
+            var temp = {
+                x: combined[0],
+                y: combined[i],
+                name: product[i - 1]
+            };
+        } else {
+            var temp = {
+                x: combined[0],
+                y: combined[i],
+                name: pro_name
+            };
+        }
+
         all_data.push(temp);
     }
-    // alert(all_data);
+    // console.log(all_data);
     Plotly.newPlot('myDiv', all_data, {
         title: "Monthly Sales of " + pro_name,
         xaxis: {
@@ -211,10 +234,10 @@ function makePlotly(combined, count, product, pro_name) {
         }
     });
 
-    create_table(combined, count, product);
+    create_table(combined, count, product, pro_name);
 };
 
-function create_table(combined, count, product) {
+function create_table(combined, count, product, pro_name) {
     var t = "";
     t = "<table>" + "<tr>" + "<th> 商品代碼 </th>";
     for (var i = 0; i < combined[0].length; i++) {
@@ -225,14 +248,31 @@ function create_table(combined, count, product) {
 
     for (var i = 0; i < count; i++) {
         var total = 0;
-        t += "<tr>" + "<td>" + product[i] + "</td>";
-        for (var j = 0; j < combined[0].length; j++) {
-            t += "<td>" + combined[i + 1][j] + "</td>";
-            if (Number.isNaN(parseInt(combined[i + 1][j])) == false) {
-                // console.log(parseInt(combined[i + 1][j]))
-                total += parseInt(combined[i + 1][j]);
+        if (i != count - 1) {
+            t += "<tr>" + "<td>" + product[i] + "</td>";
+            for (var j = 0; j < combined[0].length; j++) {
+                if (Number.isNaN(parseInt(combined[i + 1][j])) == false) {
+                    // console.log(parseInt(combined[i + 1][j]))
+                    t += "<td>" + combined[i + 1][j] + "</td>";
+                    total += parseInt(combined[i + 1][j]);
+                } else {
+                    t += "<td> </td>";
+                }
+            }
+        } else {
+            t += "<tr>" + "<td>" + pro_name + "</td>";
+            for (var j = 0; j < combined[0].length; j++) {
+                // console.log(combined[i + 1][j]);
+                if (Number.isNaN(parseInt(combined[i + 1][j])) == false) {
+                    // console.log(parseInt(combined[i + 1][j]))
+                    t += "<td>" + combined[i + 1][j] + "</td>";
+                    total += parseInt(combined[i + 1][j]);
+                } else {
+                    t += "<td> </td>";
+                }
             }
         }
+
         t += "<td>" + total + "</td>";
         t += "</tr>";
     }
