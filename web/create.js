@@ -86,7 +86,7 @@ function create_choices(c) {
 
 function brand_list(brand_item, brand_cnt, choosen_brand) {
     Plotly.d3.csv(
-        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/cancelled_no0720.csv",
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum.csv",
         function (allRows) {
             var combined = new Array(brand_cnt + 2);
             for (var i = 0; i < brand_cnt + 2; i++) {
@@ -167,7 +167,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/cancelled_no0720.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum.csv",
                 function (data) {
                     processData(data);
                 });
