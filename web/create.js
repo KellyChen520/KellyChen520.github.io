@@ -3,15 +3,6 @@ $(document).ready(function () {
 });
 
 function load() {
-    // $("#product_cnt").focus();
-
-    // var input1 = document.getElementById("product_cnt");
-    // input1.addEventListener("keyup", function (event) {
-    //     if (event.keyCode === 13) {
-    //         event.preventDefault();
-    //         document.getElementById("input_id").click();
-    //     }
-    // });
 
     $("#input_id").click(function () {
         $("#add").empty();
@@ -34,6 +25,15 @@ function create_choices(c) {
     if (c == "one") {
         var ask_cnt = "<span>欲顯示趨勢圖的商品個數 : </span><input type='text' id='product_cnt'><span> </span> <button id='input_cnt' type='button' class='bt bt1'>輸入</button>";
         $("#ask").append(ask_cnt);
+
+        var input1 = document.getElementById("product_cnt");
+        input1.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("input_cnt").click();
+            }
+        });
+
         document.getElementById('input_cnt').onclick = function findProduct() {
             $("#add").empty();
             var cnt = document.getElementById('product_cnt').value;
@@ -43,12 +43,12 @@ function create_choices(c) {
     } else {
         function get_brand() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2Brand.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2Brand%20ver2.csv",
                 function (data) {
                     // console.log(data);
                     var all_brand = [];
                     var ask_brand = "<p>請選擇品牌 (商品編號頭兩碼)：</p>   <select name='brand' id='b' class='sel'>";
-                    for (var i = 0; i < 43; i++) {
+                    for (var i = 0; i < 25; i++) {
                         row = data[i];
                         all_brand.push(row['NotRepeat']);
                         ask_brand += "<option value=" + all_brand[i] + ">" + all_brand[i] + "</option>";
@@ -86,7 +86,7 @@ function create_choices(c) {
 
 function brand_list(brand_item, brand_cnt, choosen_brand) {
     Plotly.d3.csv(
-        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum.csv",
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_range.csv",
         function (allRows) {
             var combined = new Array(brand_cnt + 2);
             for (var i = 0; i < brand_cnt + 2; i++) {
@@ -108,7 +108,7 @@ function brand_list(brand_item, brand_cnt, choosen_brand) {
             var brand_name = "brand " + choosen_brand;
 
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand_no0720.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand%20ver2.csv",
                 function (eachBrand) {
                     for (var i = 0; i < eachBrand.length; i++) {
                         row = eachBrand[i];
@@ -167,7 +167,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_range.csv",
                 function (data) {
                     processData(data);
                 });
@@ -210,11 +210,19 @@ function makePlotly(combined, count, product, pro_name) {
                 name: product[i - 1]
             };
         } else {
-            var temp = {
-                x: combined[0],
-                y: combined[i],
-                name: pro_name
-            };
+            if (pro_name.indexOf('brand') == -1) {
+                var temp = {
+                    x: combined[0],
+                    y: combined[i],
+                    name: product[i - 1]
+                };
+            } else {
+                var temp = {
+                    x: combined[0],
+                    y: combined[i],
+                    name: pro_name
+                };
+            }
         }
 
         all_data.push(temp);
@@ -260,7 +268,11 @@ function create_table(combined, count, product, pro_name) {
                 }
             }
         } else {
-            t += "<tr>" + "<td>" + pro_name + "</td>";
+            if (pro_name.indexOf('brand') == -1) {
+                t += "<tr>" + "<td>" + product[i] + "</td>";
+            } else {
+                t += "<tr>" + "<td>" + pro_name + "</td>";
+            }
             for (var j = 0; j < combined[0].length; j++) {
                 // console.log(combined[i + 1][j]);
                 if (Number.isNaN(parseInt(combined[i + 1][j])) == false) {
