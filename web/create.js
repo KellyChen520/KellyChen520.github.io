@@ -43,12 +43,12 @@ function create_choices(c) {
     } else {
         function get_brand() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2Brand%20ver2.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2BRAND%20%20ver3.csv",
                 function (data) {
                     // console.log(data);
                     var all_brand = [];
                     var ask_brand = "<p>請選擇品牌 (商品編號頭兩碼)：</p>   <select name='brand' id='b' class='sel'>";
-                    for (var i = 0; i < 25; i++) {
+                    for (var i = 0; i < 53; i++) {
                         row = data[i];
                         all_brand.push(row['NotRepeat']);
                         ask_brand += "<option value=" + all_brand[i] + ">" + all_brand[i] + "</option>";
@@ -62,17 +62,14 @@ function create_choices(c) {
                         var choosen_brand = $('#b').val();
                         // alert(choosen_brand);
                         var brand_item = [];
+                        // alert(data.length)
                         for (var i = 0; i < data.length; i++) {
                             row = data[i];
                             if (row['Brand'] == choosen_brand) {
-                                brand_item.push(row['SKU_list']);
-                            } else {
-                                if (brand_item.length != 0) {
-                                    break;
-                                }
-                            }
+                                brand_item.push(row['SKU']);
+                            } 
                         }
-                        // alert(brand_item);
+                        //  alert(brand_item);
                         var brand_cnt = brand_item.length;
                         // alert(brand_cnt);
                         brand_list(brand_item, brand_cnt, choosen_brand);
@@ -86,7 +83,7 @@ function create_choices(c) {
 
 function brand_list(brand_item, brand_cnt, choosen_brand) {
     Plotly.d3.csv(
-        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_range.csv",
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1006).csv",
         function (allRows) {
             var combined = new Array(brand_cnt + 2);
             for (var i = 0; i < brand_cnt + 2; i++) {
@@ -108,7 +105,7 @@ function brand_list(brand_item, brand_cnt, choosen_brand) {
             var brand_name = "brand " + choosen_brand;
 
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand%20ver2.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand%20ver3.csv",
                 function (eachBrand) {
                     for (var i = 0; i < eachBrand.length; i++) {
                         row = eachBrand[i];
@@ -167,7 +164,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_range.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1006).csv",
                 function (data) {
                     processData(data);
                 });
