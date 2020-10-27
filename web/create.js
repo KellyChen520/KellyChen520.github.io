@@ -43,7 +43,7 @@ function create_choices(c) {
     } else {
         function get_brand() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2BRAND%20%20ver4.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/SKU2BRAND%20ver5.csv",
                 function (data) {
                     // console.log(data);
                     var all_brand = [];
@@ -85,7 +85,7 @@ function create_choices(c) {
 
 function brand_list(brand_item, brand_cnt, choosen_brand) {
     Plotly.d3.csv(
-        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1023).csv",
+        "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1027).csv",
         function (allRows) {
             var combined = new Array(brand_cnt + 2);
             for (var i = 0; i < brand_cnt + 2; i++) {
@@ -97,7 +97,7 @@ function brand_list(brand_item, brand_cnt, choosen_brand) {
                 row = allRows[i];
                 for (var j = 0; j < brand_cnt + 1; j++) {
                     if (j == 0) {
-                        combined[j][i] = row['date'];
+                        combined[j][i] = row['HDATE'];
                     } else {
                         // alert(product[j - 1]);
                         combined[j][i] = row[brand_item[j - 1]];
@@ -107,7 +107,7 @@ function brand_list(brand_item, brand_cnt, choosen_brand) {
             var brand_name = "brand " + choosen_brand;
 
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand_total_sales%20ver4.csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/brand_total_sales%20ver5.csv",
                 function (eachBrand) {
                     for (var i = 0; i < eachBrand.length; i++) {
                         row = eachBrand[i];
@@ -166,7 +166,7 @@ function create_control(cnt) {
 
         function makeplot() {
             Plotly.d3.csv(
-                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1023).csv",
+                "https://raw.githubusercontent.com/KellyChen520/programming-project/master/sort_by_sum%20(1027).csv",
                 function (data) {
                     processData(data);
                 });
@@ -184,7 +184,7 @@ function create_control(cnt) {
                 row = allRows[i];
                 for (var j = 0; j < count + 1; j++) {
                     if (j == 0) {
-                        combined[j][i] = row['date'];
+                        combined[j][i] = row['HDATE'];
                     } else {
                         // alert(product[j - 1]);
                         combined[j][i] = row[product[j - 1]];
