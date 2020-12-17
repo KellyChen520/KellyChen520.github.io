@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization</title>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous">
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="jquery.js"></script>
+    <script src="output.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="final.css"> -->
+</head>
+
+<body>
+    <div class="container title">
+        <p style="font-family: 'Microsoft JhengHei'; color: black; font-weight: bolder; font-size: 150%;">Summary</p>
+    </div>
+
+    <div>
+        <p style="margin-left: 80px;">以下為前 10 名商品的預測概要</p>
+    </div>
+
+    <div class="container">
+        <div id="summary"></div>
+        <p> </p>
+        <p> </p>
+    </div>
+
+    <div class="container choices">
+        <div id="ask"></div>
+    </div>
+    <!-- <div id='result_id'></div> -->
+    <div class="container result">
+        <div id="myDiv" class="container pic flex">
+            <!-- Plotly chart will be drawn inside this DIV -->
+            <!-- style="width: 550px; height: 460px;" -->
+        </div>
+    </div>
+    
+
+    <footer class="py-5">
+        <div class="container">
+            <div class="small text-muted"></div>
+        </div>
+    </footer>
+
+
+
+</body>
+
+</html>
