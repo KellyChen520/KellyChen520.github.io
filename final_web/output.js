@@ -142,7 +142,7 @@ function makePlotly(original, predict, choosen_name) {
     var trace2 = {
         x: predict[0],
         y: predict[1],
-        name: "prediction",
+        name: "forcasting",
         mode: 'lines'
     }
     
