@@ -33,7 +33,7 @@
 }
 
 .bt1 {
-    background-color: #2e7df3e8;
+    background-color: #f3bf16;
     color: white;
     font-family: 'Microsoft YaHei';
     font-size: medium;
@@ -42,49 +42,35 @@
 .bt1:hover {
     background-color: white;
     color: black;
-    border: 2px solid #2e7df3e8;
-}
-
-.pic-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    border: 2px solid #f3bf16;
 }
 
 .result {
     position: relative;
     width: 65%;
-    margin-left: 18%;
+    margin-left: 20%;
     height: 480px;
 }
 
-.pic {
-    position: absolute;
-    /* text-align: center; */
-    /* width: 60%; */
-    /* height: 460px; */
-    /* margin-left: 20%; */
-    display: inline-block;
-    margin: 0 auto;
-}
 
 .tb {
     position: relative;
     /* top: 400px; */
     width: 80%;
-    margin-left: 12%;
+    margin-left: 30%;
     display: block;
     font-family: 'Microsoft JhengHei';
 }
 
-table,
 td,
 th {
     border: 1px solid black;
+    /* border-bottom: 1px solid black; */
+    /* border-inline: 1px solid black; */
 }
 
 th {
-    background-color: #2f96d1;
+    background-color: #f3bf16;
     color: white;
 }
 
@@ -92,6 +78,8 @@ table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
+    margin-left: 28%;
+    /* border: 1px solid black; */
 }
 
 .table_title {
