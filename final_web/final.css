@@ -125,3 +125,14 @@ table {
         border-radius: 8px;
         padding: 25px;
     }
+
+    #output
+    {
+        margin:0px auto;
+        text-align:center;
+        box-shadow: 6px 6px 5px 5px rgba(0,0,0,0.2);
+        background-color: rgb(233, 232, 232);
+        width: 40%;
+        padding: 25px;
+        border-radius: 8px;
+    }
