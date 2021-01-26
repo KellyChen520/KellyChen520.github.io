@@ -111,3 +111,17 @@ table {
   border-bottom-right-radius: 50% 20%;
         
     }
+
+    #choice
+    {
+        z-index: 5;
+        top: -80px;
+        position:relative;
+        margin:0px auto;
+        text-align:center;
+        box-shadow: 6px 6px 5px 5px rgba(0,0,0,0.2);
+        width: 40%;
+        background-color: rgb(233, 232, 232);
+        border-radius: 8px;
+        padding: 25px;
+    }
