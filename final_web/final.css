@@ -139,5 +139,6 @@ table {
     #summary
     {
         background-color:black;
+        display: inline;
     }
     
