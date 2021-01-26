@@ -48,7 +48,7 @@
 .result {
     position: relative;
     width: 65%;
-    /*margin-left: 20%; */
+    margin: auto;
     height: 480px;
 }
 
@@ -57,7 +57,7 @@
     position: relative;
     /* top: 400px; */
     width: 80%;
-    /*margin-left: 30%; */
+    margin: auto; 
     display: block;
     font-family: 'Microsoft JhengHei';
 }
