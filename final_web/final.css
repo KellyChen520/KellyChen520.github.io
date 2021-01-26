@@ -95,3 +95,19 @@ table {
     width: 100%;
     text-align: center;
 }
+
+#header
+    {
+        margin:0px auto;
+        text-align:center;
+        height: 250px;
+        
+    line-height: 150px;
+
+    background-image: linear-gradient(#eca868, #fcf2e1);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  border-bottom-left-radius: 50% 20%;
+  border-bottom-right-radius: 50% 20%;
+        
+    }
