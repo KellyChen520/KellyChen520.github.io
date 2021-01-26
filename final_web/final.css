@@ -78,7 +78,7 @@ table {
     display: block;
     overflow-x: auto;
     white-space: nowrap;
-    margin-left: 28%;
+    margin: auto;
     /* border: 1px solid black; */
 }
 
@@ -136,8 +136,4 @@ table {
         padding: 25px;
         border-radius: 8px;
     }
-    #summary
-    {
-        display: flex;
-  justify-content: center;
-    }
+    
