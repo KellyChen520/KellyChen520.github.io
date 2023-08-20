@@ -214,9 +214,9 @@ section {
 
 
 .coverflow {
-    width: 45%;
+    width: 25%;
     position: relative;
-    right: -20%;
+    right: -30%;
 }
 
 .coverflow>a {
